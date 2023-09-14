@@ -1,0 +1,40 @@
+
+# @name get-prompts
+GET http://localhost:3000/prompts
+
+###
+
+# @name upload
+POST http://localhost:3000/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="example.mp3"
+Content-Type: audio/mpeg
+
+< ./example.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3000/videos/11e7b082-6313-4213-894c-b263d540227d/transcription
+Content-Type: application/json
+
+{
+    "prompt": "Dona aranha, Luiza Sonsa"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3000/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "11e7b082-6313-4213-894c-b263d540227d",
+    "temperature": 0.5,
+    "template": "gere um resumo sucinto da transcrição do video informado a seguir: '''{transcription}''' "
+}
+
+
